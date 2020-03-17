@@ -6,7 +6,15 @@ h3{
 }
 </style>
 <div class="user-card">
-    <h3></h3>
+    <img />    
+    <div>
+        <h3></h3>
+        <div class="info">
+            <p>Email</p>
+            <p>Phone</p>
+        </div>
+        <button id="toggle-info"></button>
+    </div>
 </div>
 `;
 
@@ -17,8 +25,10 @@ class UserCard extends HTMLElement {
 
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
-
+    // Name
     this.shadowRoot.querySelector('h3').innerText = this.getAttribute('name');
+    // Avatar
+    this.shadowRoot.querySelector('img').src = this.getAttribute('avatar');
 
   }
 }
