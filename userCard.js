@@ -1,6 +1,7 @@
 const template = document.createElement("template");
 template.innerHTML = `
 <style>
+
 .user-card {
 		font-family: 'Arial', sans-serif;
 		background: #f4f4f4;
@@ -44,13 +45,41 @@ class UserCard extends HTMLElement {
   constructor() {
     super();
 
+    this.showInfo = true;
+
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     // Name
-    this.shadowRoot.querySelector('h3').innerText = this.getAttribute('name');
+    this.shadowRoot.querySelector("h3").innerText = this.getAttribute("name");
     // Avatar
-    this.shadowRoot.querySelector('img').src = this.getAttribute('avatar');
+    this.shadowRoot.querySelector("img").src = this.getAttribute("avatar");
+  }
 
+  // !Toggle btn hide & show
+  toggleInfo() {
+    this.showInfo = !this.showInfo;
+
+    const info = this.shadowRoot.querySelector(".info");
+    const toggleBtn = this.shadowRoot.querySelector("#toggle-info");
+
+    if (this.showInfo) {
+      info.style.display = "block";
+      toggleBtn.innerText = "Hide Info";
+    } else {
+      info.style.display = "none";
+      toggleBtn.innerText = "Show Info";
+    }
+  }
+
+  //! Toggle button
+  connectedCallback() {
+    this.shadowRoot
+      .querySelector("#toggle-info")
+      .addEventListener("click", () => this.toggleInfo());
+  }
+
+  disconnectedCallback() {
+    this.shadowRoot.querySelector("#toggle-info").removeEventListener();
   }
 }
 
